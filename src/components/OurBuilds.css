@@ -1,0 +1,175 @@
+/* ===================================
+   Our Builds Section - Formal Composition
+   =================================== */
+
+.builds-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.2, 1),
+              transform 0.8s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+.builds-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Centered Content Container */
+.builds-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+/* Hero Block - Top Position */
+.builds-hero {
+  position: absolute;
+  top: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 20;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+}
+
+/* Main Title */
+.builds-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+  text-align: center;
+}
+
+/* Subtitle */
+.builds-subtitle {
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Top Gradient Overlay - Blends with previous section */
+.builds-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, 
+                              transparent 0%,
+                              transparent 50%,
+                              rgba(10, 10, 10, 0.1) 80%,
+                              rgba(10, 10, 10, 0.2) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 3D Canvas Container - Centered Vertically */
+.builds-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  pointer-events: auto;
+}
+
+/* Bottom Gradient Overlay - Grounds the Scene */
+.builds-gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, 
+                              rgba(10, 10, 10, 0.5) 0%, 
+                              rgba(10, 10, 10, 0.3) 30%,
+                              transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Subtle Section Divider - Hidden for seamless blend */
+.builds-divider {
+  display: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .builds-hero {
+    top: 4vh;
+    padding: 0 20px;
+  }
+  
+  .builds-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  }
+  
+  .builds-subtitle {
+    font-size: clamp(0.8rem, 1.8vw, 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .builds-hero {
+    top: 5vh;
+    padding: 0 16px;
+  }
+  
+  .builds-title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    letter-spacing: -0.01em;
+  }
+  
+  .builds-subtitle {
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .builds-hero {
+    top: 4vh;
+  }
+  
+  .builds-gradient-overlay {
+    height: 150px;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  .builds-section {
+    transition: opacity 0.3s ease;
+    transform: none;
+  }
+  
+  .builds-section.visible {
+    transform: none;
+  }
+}

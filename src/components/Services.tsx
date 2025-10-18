@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import ScrollReveal from './ScrollReveal';
 
 const Services = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -40,12 +41,19 @@ const Services = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="min-h-screen flex items-center justify-center bg-black py-24 px-6"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-b from-zinc-900 to-black py-32 px-6 relative"
     >
       <div className={`max-w-6xl mx-auto w-full section-fade-in ${isVisible ? 'visible' : ''}`}>
-        <h2 className="text-5xl md:text-6xl font-bold text-white mb-16 text-center tracking-tight">
+        <ScrollReveal
+          baseOpacity={0}
+          enableBlur={true}
+          baseRotation={3}
+          blurStrength={10}
+          containerClassName="mb-16 text-center"
+          textClassName="text-5xl md:text-6xl font-bold text-white tracking-tight"
+        >
           Services We Provide.
-        </h2>
+        </ScrollReveal>
         
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (

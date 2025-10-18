@@ -82,6 +82,7 @@ const Hyperspeed = ({
 }: { effectOptions?: HyperspeedOptions }) => {
   const hyperspeed = useRef<HTMLDivElement>(null);
   const appRef = useRef<any>(null);
+  const ioRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     if (appRef.current) {
@@ -98,17 +99,38 @@ const Hyperspeed = ({
       const container = document.getElementById('lights');
       if (!container) return;
       
-      const options = { ...effectOptions };
+      // Lighter defaults unless overridden via props
+      const options = { 
+        totalSideLightSticks: 14,
+        lightPairsPerRoadWay: 28,
+        ...effectOptions 
+      };
       options.distortion = distortions[options.distortion as keyof typeof distortions];
 
       const myApp = new App(container, options);
       appRef.current = myApp;
       myApp.loadAssets().then(() => myApp.init());
+
+      // Pause rendering when hero not visible
+      if (ioRef.current) ioRef.current.disconnect();
+      ioRef.current = new IntersectionObserver(
+        ([entry]) => {
+          if (appRef.current && typeof appRef.current.setRunning === 'function') {
+            appRef.current.setRunning(entry.isIntersecting);
+          }
+        },
+        { threshold: 0.05 }
+      );
+      ioRef.current.observe(container);
     })();
 
     return () => {
       if (appRef.current) {
         appRef.current.dispose();
+      }
+      if (ioRef.current) {
+        ioRef.current.disconnect();
+        ioRef.current = null;
       }
     };
   }, [effectOptions]);

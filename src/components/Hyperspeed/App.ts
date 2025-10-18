@@ -17,6 +17,7 @@ export class App {
   clock: THREE.Clock;
   assets: any;
   disposed: boolean;
+  running: boolean;
   road: Road;
   leftCarLights: CarLights;
   rightCarLights: CarLights;
@@ -42,7 +43,8 @@ export class App {
       alpha: true
     });
     this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    // Cap pixel ratio for performance on high-DPI displays
+    this.renderer.setPixelRatio(Math.min(1.5, window.devicePixelRatio || 1));
     this.composer = new EffectComposer(this.renderer);
     container.append(this.renderer.domElement);
 
@@ -68,6 +70,7 @@ export class App {
     this.clock = new THREE.Clock();
     this.assets = {};
     this.disposed = false;
+    this.running = true;
 
     this.road = new Road(this, options);
     this.leftCarLights = new CarLights(
@@ -119,19 +122,16 @@ export class App {
     this.bloomPass = new EffectPass(
       this.camera,
       new BloomEffect({
-        luminanceThreshold: 0.2,
-        luminanceSmoothing: 0,
-        resolutionScale: 1
+        luminanceThreshold: 0.3,
+        luminanceSmoothing: 0.1,
+        // Render bloom at half resolution for performance
+        resolutionScale: 0.5
       })
     );
 
     const smaaPass = new EffectPass(
       this.camera,
-      new SMAAEffect({
-        preset: SMAAPreset.MEDIUM,
-        searchImage: SMAAEffect.searchImageDataURL,
-        areaImage: SMAAEffect.areaImageDataURL
-      })
+      new SMAAEffect({ preset: SMAAPreset.MEDIUM })
     );
     this.renderPass.renderToScreen = false;
     this.bloomPass.renderToScreen = false;
@@ -285,12 +285,21 @@ export class App {
     }
   }
 
+  setRunning(run: boolean) {
+    this.running = run;
+  }
+
   setSize(width: number, height: number, updateStyles: boolean) {
     this.composer.setSize(width, height, updateStyles);
   }
 
   tick() {
     if (this.disposed || !this) return;
+    // Skip heavy work when not visible
+    if (!this.running) {
+      requestAnimationFrame(this.tick);
+      return;
+    }
     if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
       const canvas = this.renderer.domElement;
       this.camera.aspect = canvas.clientWidth / canvas.clientHeight;

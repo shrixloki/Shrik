@@ -3,19 +3,22 @@ import Hero from '@/components/Hero';
 import WhatWeDo from '@/components/WhatWeDo';
 import OurBuilds from '@/components/OurBuilds';
 import Team from '@/components/Team';
-import Services from '@/components/Services';
 import Contact from '@/components/Contact';
+import SectionDivider from '@/components/SectionDivider';
 
 const Index = () => {
   return (
-    <div className="w-full">
+    <div className="w-full" style={{ background: 'transparent' }}>
       <Navigation />
-      <main>
+      <main className="relative">
         <Hero />
         <WhatWeDo />
         <OurBuilds />
         <Team />
-        <Services />
+        
+        {/* Intentional divider for elegant separation */}
+        <SectionDivider />
+        
         <Contact />
       </main>
     </div>

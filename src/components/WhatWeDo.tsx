@@ -1,149 +1,147 @@
-import { useEffect, useRef, useState } from 'react';
 import ScrollReveal from './ScrollReveal';
 
 const WhatWeDo = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const services = [
-    {
-      title: "We Build Foundational Systems.",
-      content: [
-        "Shrik designs intelligent frameworks, infrastructures, and developer environments that form the backbone of digital ecosystems.",
-        "Every construct we craft is engineered to scale with precision, autonomy, and permanence.",
-        "",
-        "△ Purpose: Expresses your role as builders of deep technology — this is the core of Shrik's identity."
-      ]
-    },
-    {
-      title: "We Collaborate to Create.",
-      content: [
-        "Shrik works alongside developers, startups, and enterprises to build production-grade systems — from autonomous AIs to complete digital platforms.",
-        "We bring vision, architecture, and engineering discipline to every collaboration.",
-        "",
-        "△ Purpose: Shows your openness and authority — you don't just build your own systems, you help others reach that level of excellence."
-      ]
-    },
-    {
-      title: "We Craft What Comes Next.",
-      content: [
-        "Beyond frameworks, we design intelligent architectures that think, adapt, and endure.",
-        "We don't chase trends — we define trajectories.",
-        "",
-        "Our craft lies in shaping the unseen: the environments where intelligence learns, where systems evolve, and where developers discover the tools that move civilization forward.",
-        "",
-        "Every construct we create — every interface, engine, and logic chain — is made to outlast its moment.",
-        "We build with permanence in mind, precision in purpose, and a relentless curiosity for what lies beyond.",
-        "",
-        "Shrik doesn't iterate on the present.",
-        "We engineer the infrastructure of what comes after."
-      ]
-    }
-  ];
-
   return (
     <section
       id="what-we-do"
-      ref={sectionRef}
-      className="min-h-screen bg-black py-20 px-6 md:px-12 lg:px-20"
+      className="relative w-full min-h-screen overflow-hidden bg-black"
     >
-      <div className={`w-full max-w-7xl mx-auto section-fade-in ${isVisible ? 'visible' : ''}`}>
-        {/* Title */}
-        <ScrollReveal
-          baseOpacity={0}
-          enableBlur={true}
-          baseRotation={3}
-          blurStrength={10}
-          containerClassName="mb-16 text-center"
-          textClassName="text-4xl md:text-5xl lg:text-6xl font-light text-white tracking-wide"
-        >
-          What we do?
-        </ScrollReveal>
+      <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20 py-20 md:py-32">
         
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {/* Top Left Card */}
-          <div className="border border-white/30 rounded-2xl p-8 lg:p-10 hover:border-white/50 transition-colors duration-300">
-            <h3 className="text-lg font-medium text-white mb-6">
-              {services[0].title}
-            </h3>
-            <div className="space-y-3">
-              {services[0].content.map((paragraph, index) => (
-                paragraph ? (
-                  <p key={index} className={`text-sm leading-relaxed ${
-                    paragraph.startsWith('△') ? 'text-white/50 text-xs mt-2' : 'text-white/70'
-                  }`}>
-                    {paragraph}
-                  </p>
-                ) : (
-                  <div key={index} className="h-2"></div>
-                )
-              ))}
-            </div>
-          </div>
+        {/* 1️⃣ SECTION HEADER — IDENTITY */}
+        <div className="text-center mb-32 md:mb-40">
+          <ScrollReveal
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={0}
+            blurStrength={4}
+            containerClassName="mb-6"
+            textClassName="!text-white !font-bold !tracking-tight !text-[clamp(3.5rem,5vw,5rem)] !leading-[1.2] !m-0"
+            mode="words"
+          >
+            What We Do.
+          </ScrollReveal>
+          
+          <ScrollReveal
+            baseOpacity={0.1}
+            enableBlur={true}
+            baseRotation={0}
+            blurStrength={3}
+            containerClassName="mx-auto max-w-3xl"
+            textClassName="!text-white/70 !font-light !text-[clamp(1.2rem,2vw,1.5rem)] !leading-[1.5] !m-0"
+            mode="words"
+          >
+            We build, we design, and we collaborate — crafting the frameworks that define the next era of systems.
+          </ScrollReveal>
+        </div>
 
-          {/* Top Right Card - Spans 2 rows */}
-          <div className="border border-white/30 rounded-2xl p-8 lg:p-10 hover:border-white/50 transition-colors duration-300 lg:row-span-2">
-            <h3 className="text-lg font-medium text-white mb-6">
-              {services[2].title}
-            </h3>
-            <div className="space-y-4">
-              {services[2].content.map((paragraph, index) => (
-                paragraph ? (
-                  <p key={index} className="text-white/70 text-sm leading-relaxed">
-                    {paragraph}
-                  </p>
-                ) : (
-                  <div key={index} className="h-2"></div>
-                )
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom Left Card */}
-          <div className="border border-white/30 rounded-2xl p-8 lg:p-10 hover:border-white/50 transition-colors duration-300">
-            <h3 className="text-lg font-medium text-white mb-6">
-              {services[1].title}
-            </h3>
-            <div className="space-y-3">
-              {services[1].content.map((paragraph, index) => (
-                paragraph ? (
-                  <p key={index} className={`text-sm leading-relaxed ${
-                    paragraph.startsWith('△') ? 'text-white/50 text-xs mt-2' : 'text-white/70'
-                  }`}>
-                    {paragraph}
-                  </p>
-                ) : (
-                  <div key={index} className="h-2"></div>
-                )
-              ))}
-            </div>
+        {/* 2️⃣ CORE SECTION — THREE PILLARS */}
+        
+        {/* A. WE BUILD FOUNDATIONAL SYSTEMS */}
+        <div className="relative mb-24 md:mb-32 min-h-[25vh] flex items-center">
+          {/* Subtle vertical divider */}
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-white/15" />
+          
+          <div className="pl-8 md:pl-12 max-w-4xl">
+            <ScrollReveal
+              baseOpacity={0.1}
+              enableBlur={true}
+              baseRotation={0}
+              blurStrength={3}
+              containerClassName="mb-6"
+              textClassName="!text-white !font-bold !text-3xl md:!text-4xl !m-0"
+              mode="words"
+            >
+              We Build Foundational Systems.
+            </ScrollReveal>
+            
+            <ScrollReveal
+              baseOpacity={0.2}
+              enableBlur={true}
+              baseRotation={0}
+              blurStrength={2}
+              textClassName="!text-white/80 !font-light !text-lg md:!text-xl !leading-relaxed !m-0"
+              mode="words"
+            >
+              Intelligent frameworks and infrastructures that form the backbone of digital ecosystems. Every construct we create is engineered to scale with precision and permanence.
+            </ScrollReveal>
           </div>
         </div>
 
-        {/* Optional: Subtle indicator dots at the top center */}
-        <div className="flex justify-center mt-16 space-x-3">
-          <div className="w-2 h-2 rounded-full bg-white/60"></div>
-          <div className="w-2 h-2 rounded-full bg-white/30"></div>
-          <div className="w-2 h-2 rounded-full bg-white/15"></div>
+        {/* B. WE COLLABORATE TO CREATE */}
+        <div className="relative mb-24 md:mb-32 min-h-[25vh] flex items-center justify-end">
+          {/* Subtle circular glow */}
+          <div 
+            className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl opacity-5 pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)' }}
+          />
+          
+          <div className="pr-8 md:pr-12 max-w-4xl text-right">
+            <ScrollReveal
+              baseOpacity={0.1}
+              enableBlur={true}
+              baseRotation={0}
+              blurStrength={3}
+              containerClassName="mb-6"
+              textClassName="!text-white !font-bold !text-3xl md:!text-4xl !m-0"
+              mode="words"
+            >
+              We Collaborate to Create.
+            </ScrollReveal>
+            
+            <ScrollReveal
+              baseOpacity={0.2}
+              enableBlur={true}
+              baseRotation={0}
+              blurStrength={2}
+              textClassName="!text-white/80 !font-light !text-lg md:!text-xl !leading-relaxed !m-0"
+              mode="words"
+            >
+              Shrik works with engineers, creators, and organizations to craft production-grade systems — from autonomous AI frameworks to full-scale digital platforms. Vision, architecture, and precision define every partnership.
+            </ScrollReveal>
+          </div>
         </div>
+
+        {/* C. WE CRAFT WHAT COMES NEXT */}
+        <div className="relative mb-32 md:mb-40 min-h-[25vh] flex items-center justify-center">
+          {/* Neural grid backdrop */}
+          <div 
+            className="absolute inset-0 opacity-5 pointer-events-none"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px',
+            }}
+          />
+          
+          <div className="text-center max-w-4xl px-4 relative z-10">
+            <ScrollReveal
+              baseOpacity={0.1}
+              enableBlur={true}
+              baseRotation={0}
+              blurStrength={3}
+              containerClassName="mb-6"
+              textClassName="!text-white !font-bold !text-3xl md:!text-4xl !m-0"
+              mode="words"
+            >
+              We Craft What Comes Next.
+            </ScrollReveal>
+            
+            <ScrollReveal
+              baseOpacity={0.2}
+              enableBlur={true}
+              baseRotation={0}
+              blurStrength={2}
+              textClassName="!text-white/80 !font-light !text-lg md:!text-xl !leading-relaxed !m-0"
+              mode="words"
+            >
+              We design intelligent architectures that learn, adapt, and endure. Not chasing trends — but defining trajectories. Shaping environments where intelligence evolves and systems think.
+            </ScrollReveal>
+          </div>
+        </div>
+
       </div>
     </section>
   );

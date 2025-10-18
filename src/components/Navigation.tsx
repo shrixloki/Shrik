@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,12 +14,11 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#hero' },
-    { name: 'What We Do', href: '#what-we-do' },
-    { name: 'Our Builds', href: '#builds' },
-    { name: 'Team', href: '#team' },
-    { name: 'Services', href: '#services' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'What We Do', href: '/what-we-do' },
+    { name: 'Our Builds', href: '/our-builds' },
+    { name: 'Team', href: '/team' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -31,13 +32,15 @@ const Navigation = () => {
           <ul className="flex gap-8">
             {navItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="text-sm font-medium tracking-wide text-white hover:text-white/70 transition-colors duration-200 relative group"
+                <Link
+                  to={item.href}
+                  className={`text-sm font-medium tracking-wide transition-colors duration-200 relative group ${
+                    location.pathname === item.href ? 'text-white' : 'text-white hover:text-white/70'
+                  }`}
                 >
                   {item.name}
                   <span className="absolute bottom-0 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full" />
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
