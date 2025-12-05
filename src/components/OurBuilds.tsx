@@ -52,7 +52,7 @@ const OurBuilds = () => {
 
   return (
     <section
-      id="builds"
+      id="our-builds"
       ref={sectionRef}
       className={`builds-section ${isVisible ? 'visible' : ''}`}
     >

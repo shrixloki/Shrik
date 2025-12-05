@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,12 +14,33 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    
+    // If we're on the home page, scroll to section
+    if (location.pathname === '/') {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // Navigate to home page, then scroll to section
+      navigate('/');
+      setTimeout(() => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  };
+
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'What We Do', href: '/what-we-do' },
-    { name: 'Our Builds', href: '/our-builds' },
-    { name: 'Team', href: '/team' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Home', sectionId: 'hero' },
+    { name: 'What We Do', sectionId: 'what-we-do' },
+    { name: 'Our Builds', sectionId: 'our-builds' },
+    { name: 'Team', sectionId: 'team' },
+    { name: 'Contact', sectionId: 'contact' },
   ];
 
   return (
@@ -32,15 +54,14 @@ const Navigation = () => {
           <ul className="flex gap-8">
             {navItems.map((item) => (
               <li key={item.name}>
-                <Link
-                  to={item.href}
-                  className={`text-sm font-medium tracking-wide transition-colors duration-200 relative group ${
-                    location.pathname === item.href ? 'text-white' : 'text-white hover:text-white/70'
-                  }`}
+                <a
+                  href={`#${item.sectionId}`}
+                  onClick={(e) => handleNavClick(e, item.sectionId)}
+                  className="text-sm font-medium tracking-wide transition-colors duration-200 relative group text-white hover:text-white/70 cursor-pointer"
                 >
                   {item.name}
                   <span className="absolute bottom-0 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full" />
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
